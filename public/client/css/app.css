@@ -1,0 +1,30 @@
+body {
+	font-family: 'Poppins', sans-serif;
+}
+.main-class > .container {
+    padding: 1.5rem;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+textarea {
+  resize: none;
+}
+.toast-success {
+	background-color: #28a745 !important;
+}
+.toast-error {
+	background-color: #dc3545 !important;
+}
+.toast-warning {
+	background-color: #ffc107 !important;	
+}
+.toast-info {
+	background-color: #17a2b8 !important;
+}
