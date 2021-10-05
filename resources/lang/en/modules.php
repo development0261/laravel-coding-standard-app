@@ -26,12 +26,14 @@ return [
     		'product_price' => 'Product Price',
     		'category' => 'Category',
     		'product_description' => 'Product Description',
+            'category_name' => 'Category Name',
     	),
     	'field_placeholders' => array(
     		'product_name' => 'Product Name',
     		'product_price' => 'Product Price',
     		'category' => 'Select Category',
     		'product_description' => 'Product Description',
+            'category_name' => 'Category Name',
     	),
     	'column_names' => array(
     		'id' => '#',
@@ -40,6 +42,7 @@ return [
     		'product_description' => 'Product Description',
     		'category' => 'Category',
     		'actions' => 'Actions',
+            'category_name' => 'Category Name',
     	),
     	'messages' => array(
     		'no_data' => 'No data found',
@@ -64,7 +67,7 @@ return [
     	'title' => 'Categories',
     	'menu' => array(
     		'add' => 'Add Category',
-    		'edit' => 'Edit Category',    		
+    		'update' => 'Update Category',
     		'view' => 'All Categories',
     	)
     ),

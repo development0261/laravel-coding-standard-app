@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','H')
+@section('title','Welcome')
 @section('content')
 @push('extraStyles')
 <style>

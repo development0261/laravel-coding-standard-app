@@ -24,26 +24,18 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
-
-
 	Route::prefix('products')->group(function () {
-		Route::resource('categories', ProductCategoryController::class,[
-			'names' => [
-		        'index' => 'categories',
-		        'create' => 'categories.create',
-		        'store' => 'categories.store',
-		        'edit' => 'categories.edit',
-		        'update' => 'categories.update',
-		        'delete' => 'categories.delete',
-		    ]
-		]);
-
+		Route::resource('categories', ProductCategoryController::class);
 		Route::get('/', [ProductController::class, 'index'])->name('products');
 		Route::get('add', [ProductController::class, 'create'])->name('products.create');
 		Route::post('add', [ProductController::class, 'store'])->name('products.store');
-		Route::get('show/{id}', [ProductController::class, 'show'])->name('products.show');
 		Route::get('edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
 		Route::put('update/{id}', [ProductController::class, 'update'])->name('products.update');
 		Route::delete('delete', [ProductController::class, 'destroy'])->name('products.delete');
 	});
+});
+
+//This route has not restricted through any middleware Eg. We can show product details without login
+Route::prefix('products')->group(function () {
+	Route::get('show/{id}', [ProductController::class, 'show'])->name('products.show');
 });

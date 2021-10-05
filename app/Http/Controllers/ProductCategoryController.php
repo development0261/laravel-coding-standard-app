@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductCategory\StoreProductCategoryRequest;
+use App\Http\Requests\ProductCategory\UpdateProductCategoryRequest;
+use Session;
 
 class ProductCategoryController extends Controller
 {
@@ -14,7 +17,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        
+        $listCategories = ProductCategory::paginate(5);
+        return view('products.categories.index',compact('listCategories'));
     }
 
     /**
@@ -24,27 +28,31 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.categories.add');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ProductCategory\StoreProductCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(StoreProductCategoryRequest $request)
+    {                    
+        $storeCategory = ProductCategory::create($request->safe()->except(['token']));
+        if (!$storeCategory) {
+            return redirect()->route('categories.index')->with('error', __('modules.comman.messages.error.store'));
+        }
+        return redirect()->route('categories.index')->with('success', __('modules.comman.messages.success.store'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProductCategory  $productCategory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductCategory $productCategory)
+    public function show($id)
     {
         //
     }
@@ -52,34 +60,64 @@ class ProductCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProductCategory  $productCategory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductCategory $productCategory)
-    {
-        //
+    public function edit($id)
+    {        
+        try {
+            $editCategory = ProductCategory::find(decrypt($id));
+        } catch(\DecryptException $e) {
+            print_r($e->getMessage());
+        }
+        if (!$editCategory) {
+            return redirect()->route('categories.index')->with('error', __('modules.comman.messages.error.not_found'));
+        }
+        return view('products.categories.edit',compact('editCategory'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductCategory  $productCategory
+     * @param  \App\Http\Requests\ProductCategory\UpdateProductCategoryRequest  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductCategory $productCategory)
+    public function update(UpdateProductCategoryRequest $request, $id)
     {
-        //
+        $updateCategory = ProductCategory::where('id',decrypt($id))->update($request->except(['_token','_method']));
+        if (!$updateCategory) {
+            return redirect()->route('categories.index')->with('error', __('modules.comman.messages.error.update'));
+        }
+        return redirect()->route('categories.index')->with('success', __('modules.comman.messages.success.update'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProductCategory  $productCategory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductCategory $productCategory)
+    public function destroy($id)
     {
-        //
+        $destroyCategory = ProductCategory::find(\Crypt::decrypt($id));
+        if (!$destroyCategory) {
+            return redirect()->route('categories.index')->with('error', __('modules.comman.messages.error.not_found'));
+        }
+        $response = $destroyCategory->delete();
+        if ($response) {
+            $data = array(
+                'status' => 200,
+                'message' => 'success',
+            );
+            Session::flash('success', __('modules.comman.messages.success.delete'));
+        } else {
+            $data = array(
+                'status' => 419,
+                'message' => 'error',
+            );
+            Session::flash('error', __('modules.comman.messages.error.delete'));
+        }
+        return response()->json($data);
     }
 }

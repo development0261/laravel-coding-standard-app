@@ -5,7 +5,7 @@
 	<div>
 		<h5>{{ __('modules.product.menu.view') }}</h5>
 	</div>
-	<table class="table table-responsive">
+	<table class="table d-md-table table-responsive">
 	  	<thead>
 		    <tr>
 		      	<th scope="col">{{ __('modules.comman.column_names.id') }}</th>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
@@ -45,13 +45,13 @@
                             <a class="nav-link" href="{{ url('/') }}">Home</a>
                         </li>
                         @auth
-                        {{-- <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('modules.category.title') }}</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('categories.create') }}">{{ __('modules.category.menu.add') }}</a>
-                                <a class="dropdown-item" href="{{ route('categories') }}">{{ __('modules.category.menu.view') }}</a>
+                                <a class="dropdown-item" href="{{ route('categories.index') }}">{{ __('modules.category.menu.view') }}</a>
                             </div>
-                        </li> --}}
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('modules.product.title') }}</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -100,7 +100,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="main-class">
             @yield('content')            
         </main>

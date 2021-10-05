@@ -56,6 +56,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id)
@@ -67,7 +68,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
@@ -88,6 +89,7 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *     
      * @param  \App\Http\Requests\Product\UpdateProductRequest  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateProductRequest $request, $id)
